@@ -1,10 +1,11 @@
 document.getElementById('form-leitura').addEventListener('submit', async function(event) {
     event.preventDefault();
 
-    const livro = document.getElementById('livro').value;
-    const autor = document.getElementById('autor').value;
-    const paginas = document.getElementById('paginas').value;
-    const resumo = document.getElementById('resumo').value;
+    const livro = document.getElementById('nameLivro').value;
+    const autor = document.getElementById('author').value;
+    const paginas = document.getElementById('pages').value;
+    const resumo = document.getElementById('description').value;
+    const date = document.getElementById('date').value;
 
     const photoInput = document.getElementById('photo');
     const photo = await convertImageToBase64(photoInput.files[0]);
@@ -15,7 +16,7 @@ document.getElementById('form-leitura').addEventListener('submit', async functio
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ livro, autor, paginas, resumo, photo })
+            body: JSON.stringify({ livro, autor, paginas, resumo,date, photo })
         });
 
         if (response.ok) {
@@ -55,10 +56,11 @@ async function fetchLivros() {
         livros.forEach(livro => {
             const item = document.createElement('div');
             item.innerHTML = `
-                <h3>${livro.livro}</h3>
-                <p>Autor: ${livro.autor}</p>
-                <p>Páginas: ${livro.paginas}</p>
-                <p>Resumo: ${livro.resumo}</p>
+                <h3>${livro.nameLivro}</h3>
+                <p>Autor: ${livro.author}</p>
+                <p>Páginas: ${livro.pages}</p>
+                <p>Resumo: ${livro.description}</p>
+                <p>Data: ${livro.date}</p>
                 <img src="${livro.photo}" alt="Capa do Livro" style="max-width: 100%; height: auto;">
             `;
             list.appendChild(item);
