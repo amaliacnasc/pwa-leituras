@@ -1,10 +1,10 @@
 document.getElementById('form-leitura').addEventListener('submit', async function(event) {
     event.preventDefault();
 
-    const livro = document.getElementById('nameLivro').value;
-    const autor = document.getElementById('author').value;
-    const paginas = document.getElementById('pages').value;
-    const resumo = document.getElementById('description').value;
+    const nameLivro = document.getElementById('nameLivro').value;
+    const author = document.getElementById('author').value;
+    const pages = document.getElementById('pages').value;
+    const description = document.getElementById('description').value;
     const date = document.getElementById('date').value;
 
     const photoInput = document.getElementById('photo');
@@ -16,7 +16,7 @@ document.getElementById('form-leitura').addEventListener('submit', async functio
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ livro, autor, paginas, resumo,date, photo })
+            body: JSON.stringify({ nameLivro, pages, author, description ,date, photo })
         });
 
         if (response.ok) {
