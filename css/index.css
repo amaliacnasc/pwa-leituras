@@ -1,0 +1,14 @@
+.botao{
+    background-color: #7f77ba;
+    color: #ffffff;
+}
+
+.botao:hover{
+    cursor: pointer;
+    background-color: #c8c2e2;
+    color: #7f77ba;
+}
+
+.menu{
+    background-color: #7f77ba;
+}

@@ -1,0 +1,25 @@
+{
+  "background_color": "#ffffff",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "Readme",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "ReadMe",
+  "start_url": "/",
+  "theme_color": "#7f77ba",
+  "icons": [
+    {
+      "src": "icons/icon-512",
+      "type": "image/png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "icons/icon-192",
+      "type": "image/jpg",
+      "sizes": "192x192"
+    }
+  ],
+  "description": "Tenha um diario de leituras na palma da sua mão. ",
+  "lang": "pt"
+}
