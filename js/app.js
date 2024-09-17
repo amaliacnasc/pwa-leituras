@@ -5,29 +5,32 @@ document.getElementById('form-leitura').addEventListener('submit', async functio
     const autor = document.getElementById('autor').value;
     const paginas = document.getElementById('paginas').value;
     const resumo = document.getElementById('resumo').value;
+
     const photoInput = document.getElementById('photo');
     const photo = await convertImageToBase64(photoInput.files[0]);
 
+    try {
+        const response = await fetch('https://api-leituras.onrender.com/api/leituras', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ livro, autor, paginas, resumo, photo })
+        });
 
-        try {
-            const response = await fetch('https://api-leituras.onrender.com/api/leituras', { // Certifique-se de que a rota da API está correta
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ livro, autor, paginas, resumo, photo })
-            });
-
-            if (response.ok) {
-                document.getElementById('form-leitura').reset(); // limpando formulario 
-                fetchLivros();
-            } else {
-                console.error('Erro ao adicionar leitura:', response.statusText);
-            }
-        } catch (error) {
-            console.error('Erro ao conectar com a API:', error);
+        if (response.ok) {
+            const result = await response.json();
+            console.log('Livro adicionado com sucesso:', result);
+            document.getElementById('form-leitura').reset(); // limpando o formulário
+            fetchLivros(); // Recarrega a lista de livros
+        } else {
+            const errorDetails = await response.json();
+            console.error('Erro ao adicionar leitura:', errorDetails.message);
         }
-    });
+    } catch (error) {
+        console.error('Erro ao conectar com a API:', error);
+    }
+});
 
 async function convertImageToBase64(file) {
     return new Promise((resolve, reject) => {
@@ -40,19 +43,22 @@ async function convertImageToBase64(file) {
 
 async function fetchLivros() {
     try {
-        const response = await fetch('https://api-leituras.onrender.com/api/leituras'); // Certifique-se de que a rota da API está correta
+        const response = await fetch('https://api-leituras.onrender.com/api/leituras');
         if (!response.ok) {
             throw new Error('Erro ao buscar leituras');
         }
-        const plantations = await response.json();
+        const livros = await response.json(); // Assumindo que a API retorna uma lista de livros
         const list = document.getElementById('lista-livros');
         list.innerHTML = '';
-        plantations.forEach(p => {
+
+        livros.forEach(livro => {
             const item = document.createElement('div');
             item.innerHTML = `
-                <h3>${p.name}</h3>
-                <p>${p.description}</p>
-                <img src="${p.photo}" alt="${p.name}" style="max-width: 100%; height: auto;">
+                <h3>${livro.livro}</h3>
+                <p>Autor: ${livro.autor}</p>
+                <p>Páginas: ${livro.paginas}</p>
+                <p>Resumo: ${livro.resumo}</p>
+                <img src="${livro.photo}" alt="Capa do Livro" style="max-width: 100%; height: auto;">
             `;
             list.appendChild(item);
         });
@@ -61,4 +67,4 @@ async function fetchLivros() {
     }
 }
 
-fetchLivros();
+fetchLivros(); // Carrega a lista de livros ao abrir a página
