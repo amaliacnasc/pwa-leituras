@@ -24,8 +24,9 @@ document.getElementById('form-leitura').addEventListener('submit', async functio
             document.getElementById('form-leitura').reset(); // limpando o formulário
             fetchLivros(); // Recarrega a lista de livros
         } else {
-            const errorDetails = await response.json();
-            console.error('Erro ao adicionar leitura:', errorDetails.message);
+            const errorDetails = await response.text();  // Aqui mudamos para 'text()' para ver a mensagem de erro completa
+            console.error('Erro ao adicionar leitura:', response.status, errorDetails);
+            alert(`Erro ao adicionar leitura: ${response.status} - ${errorDetails}`);
         }
     } catch (error) {
         console.error('Erro ao conectar com a API:', error);
