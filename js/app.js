@@ -10,7 +10,7 @@ document.getElementById('form-leitura').addEventListener('submit', async functio
 
 
         try {
-            const response = await fetch('http://127.0.0.1:3000/api/leituras', { // Certifique-se de que a rota da API está correta
+            const response = await fetch('https://api-leituras.onrender.com/api/leituras', { // Certifique-se de que a rota da API está correta
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -40,7 +40,7 @@ async function convertImageToBase64(file) {
 
 async function fetchLivros() {
     try {
-        const response = await fetch('http://127.0.0.1:3000/api/leituras'); // Certifique-se de que a rota da API está correta
+        const response = await fetch('https://api-leituras.onrender.com/api/leituras'); // Certifique-se de que a rota da API está correta
         if (!response.ok) {
             throw new Error('Erro ao buscar leituras');
         }
